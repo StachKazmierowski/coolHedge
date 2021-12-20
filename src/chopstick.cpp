@@ -63,7 +63,7 @@ vector<int> recurrence_H_chopstick(vector<int> s_A, vector<int> s_B){
         for (int num_rooks = 0; num_rooks <= min(i,j); num_rooks++)
             values[0][num_rooks][fields_number + num_rooks] = single_type_rectangle(i, j, num_rooks);
     }
-    for(int knot_index = 1; knot_index < knots.size(); knot_index++){
+    for(int knot_index = 1; knot_index < knots.size() - 1; knot_index++){
         knot = knots.at(knot_index);
         i = knot.at(0);
         j = knot.at(1);
@@ -119,6 +119,38 @@ vector<int> recurrence_H_chopstick(vector<int> s_A, vector<int> s_B){
             }
         }
     }
+    if(knots.size() > 1){
+        i = fields_number;
+        j = fields_number;
+        vector<int> previous_knot = knots[knots.size() - 2];
+        int old_i = previous_knot[0];
+        int old_j = previous_knot[1];
+        int delta_i = i - old_i;
+        int delta_j = j - old_j;
+        int maximum_rooks_in_L = min(old_i, delta_j);
+        int maximum_rooks_in_T = min(delta_i, delta_j);
+        int maximum_rooks_in_W = min(delta_i, old_j);
+        int num_rooks = fields_number;
+        for(int result = -num_rooks; result <= num_rooks; result++) {
+            int sum = 0;
+            for (int r_L = 0; r_L <= min(maximum_rooks_in_L, num_rooks); r_L++) {
+                for (int r_T = 0; r_T <= min(maximum_rooks_in_T, num_rooks); r_T++) {
+                    for (int r_W = 0; r_W <= min(maximum_rooks_in_W, num_rooks); r_W++) {
+                        int rooks_left = num_rooks - r_W - r_T - r_L;
+                        if (rooks_left >= 0 && min_number_of_rooks(old_i, old_j, fields_number) <= rooks_left &&
+                            0 <= fields_number + result - r_W + r_L && result - r_W + r_L < fields_number) {
+                            int H_tmp = values[knots.size() - 2][rooks_left][fields_number + result - r_W + r_L];
+                            int bottom = single_type_rectangle(delta_i, old_j - rooks_left, r_W);
+                            int corner = single_type_rectangle(delta_i - r_W, delta_j, r_T);
+                            int right = single_type_rectangle(old_i - rooks_left, delta_j - r_T, r_L);
+                            sum += H_tmp * bottom * corner * right;
+                        }
+                    }
+                }
+            }
+            values[knots.size()-1][num_rooks][fields_number + result] = sum;
+        }
+    }
     return values.back().back();
 }
 
@@ -139,6 +171,7 @@ void test_H_chopstick(int A, int n){
                     print_vector(mock_A);
                     print_vector(mock_B);
                     errors++;
+                    break;
                 }
             }
         }
