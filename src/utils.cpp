@@ -57,7 +57,7 @@ void print_matrix(vector<vector<double>> matrix){
 }
 
 void print_vector(vector<int> v){
-    cout << "====================" << endl;
+//    cout << "====================" << endl;
     for(int i = 0; i < v.size() ; i++){
         cout << v.at(i) << ",";
     }
@@ -326,7 +326,7 @@ vector<vector<vector<vector<int>>>> empty_H(int knots_number, int fields_number)
     return values;
 }
 
-vector<vector<int>> recurrence_H(vector<int> s_A, vector<int> s_B){
+vector<vector<int>> recurrence_H(vector<int> s_A, vector<int> s_B){ //TODO ostatni węzeł tylko n wież
     int fields_number = s_A.size();
     vector<vector<int>> clash_mat = clash_matrix(s_A, s_B);
     vector<int> L = find_area_vector(clash_mat, -1);
@@ -524,6 +524,37 @@ vector<vector<double>> payoff_matrix(int A, int B, int n, int (*aggregation_func
     }
     return matrix;
 }
+
+bool contains_clash_matrix(vector<vector<vector<int>>> vectors, vector<vector<int>> matrix){
+    for(int i  = 0; i < vectors.size(); i++){
+        if(assert_matrices(vectors.at(i), matrix))
+            return true;
+    }
+    return false;
+}
+
+void number_of_different_clash_matrices(int A, int B, int n, int (*aggregation_function)(int, int, int)){
+    vector<vector<vector<int>>> clash_matrices;
+    vector<vector<int>> A_strategies = divides_strategies(A, n);
+    vector<vector<int>> B_strategies = divides_strategies(B, n);
+    for(int i = 0 ; i < A_strategies.size(); i++){
+        for(int j = 0 ; j < B_strategies.size(); j++){
+            vector<vector<int>> clash_mat = clash_matrix(A_strategies.at(i), B_strategies.at(j));
+            vector<vector<int>> vec;
+            vec.push_back(find_area_vector(clash_mat, -1));
+            vec.push_back(find_area_vector(clash_mat, 0));
+            if(!contains_clash_matrix(clash_matrices, vec)){
+//                cout << "nie zawiera" << endl;
+                clash_matrices.push_back(vec);
+            }
+        }
+    }
+    int number = A_strategies.size() * B_strategies.size();
+    double percent = (double)((double)clash_matrices.size() / (double)number);
+    cout << "A: " << A  << endl;
+    cout << "percent: " << percent << endl;
+}
+
 
 vector<vector<double>> payoff_matrix_parallel(int A, int B, int n, int (*aggregation_function)(int, int, int)){
     if(is_symmetric(aggregation_function, n)){
