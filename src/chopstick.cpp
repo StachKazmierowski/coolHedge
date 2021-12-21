@@ -191,7 +191,7 @@ double symmetrized_payoff_chopstick(vector<int> s_A, vector<int> s_B){
 }
 
 vector<vector<double>> payoff_matrix_chopstick_parallel(int A, int B, int n){
-    if(is_symmetric(chopstick, n)){
+    if(A == B){
         cout << "symmetric" << endl;
         return payoff_matrix_chopstick_symmetric_parallel(A, B, n);
     }
