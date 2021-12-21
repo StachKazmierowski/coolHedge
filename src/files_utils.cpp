@@ -8,6 +8,16 @@ void save_matrix_to_file(vector<vector<double>> matrix, vector<vector<int>> row_
     my_file.close();
 }
 
+void save_time_to_file(long int miliseconds, int A, int B, int n){
+    ofstream my_file;
+    stringstream ss;
+    ss << TIMES_PATH << "time(" << A << "," << B << "," << n << ".txt";
+    my_file.open (ss.str());
+    ss.clear();
+    my_file << miliseconds;
+    my_file.close();
+}
+
 void write_col_strategy(ofstream& my_file, vector<int> strategy){
     my_file << ",[";
     for (int res : strategy){
@@ -41,4 +51,17 @@ void write_rows(ofstream& my_file, vector<vector<double>> matrix, vector<vector<
     my_file << setprecision(15);
     for(int i = 0; i < row_strategies.size(); i++)
         write_row(my_file, row_strategies[i], matrix[i]);
+}
+
+void find_and_save_chopstick_matrix(int A, int B, int n){
+    chrono::steady_clock::time_point begin = chrono::steady_clock::now();
+    vector<vector<int>> A_strategies = divides_strategies(A, n);
+    vector<vector<int>> B_strategies = divides_strategies(B, n);
+    vector<vector<double>> matrix = payoff_matrix_chopstick_parallel(A, B, n);
+    chrono::steady_clock::time_point end = chrono::steady_clock::now();
+    long int miliseconds = chrono::duration_cast<chrono::milliseconds>(end - begin).count();
+    save_time_to_file(miliseconds, A, B, n);
+    stringstream ss;
+    ss << MATRICES_PATH << "payoff_matrix(" << A << "," << B << "," << n << ").csv";
+    save_matrix_to_file(matrix, A_strategies, B_strategies, ss.str());
 }

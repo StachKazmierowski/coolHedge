@@ -235,7 +235,7 @@ vector<vector<double>> payoff_matrix_chopstick_symmetric_parallel(int A, int B, 
     int i;
     int j;
 #pragma omp parallel for default(none) private(i, j) shared(A_strategies, B_strategies, matrix)
-    for(i = 1 ; i < A_strategies.size(); i++){
+    for(i = 0 ; i < A_strategies.size(); i++){
         for(j = i + 1 ; j < B_strategies.size(); j++){
             double payoff =  symmetrized_payoff_chopstick(A_strategies.at(i), B_strategies.at(j));
             matrix.at(i).at(j) = payoff;

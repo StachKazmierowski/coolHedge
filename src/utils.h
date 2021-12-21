@@ -25,13 +25,13 @@ vector<vector<int>> all_permutations(vector<int> s_A);
 
 vector<vector<int>> divides_strategies(int resources, int fields_number);
 
-int k_W(vector<int> s_A, vector<int> s_B);
+long int k_W(vector<int> s_A, vector<int> s_B);
 
-int k_L(vector<int> s_A, vector<int> s_B);
+long int k_L(vector<int> s_A, vector<int> s_B);
 
-vector<vector<int>> h(vector<int> s_A, vector<int> s_B);
+vector<vector<long int>> h(vector<int> s_A, vector<int> s_B);
 
-int factorial(int n);
+long int factorial(int n);
 
 int matrix_sum(vector<vector<int>> matrix);
 
@@ -39,7 +39,9 @@ vector<int> find_area_vector(vector<vector<int>> clash_mat, int area);
 
 void print_vector(vector<int> v);
 
-vector<vector<int>> empty_matrix(int size);
+vector<vector<long int>> empty_matrix(int size);
+
+vector<vector<int>> empty_clash_matrix(int size);
 
 int height_to_cutoff(vector<int> L, vector<int> T, int current_height);
 
@@ -51,7 +53,7 @@ int same_values_at_tail(vector<int> v);
 
 vector<int> add_vectors(vector<int> a, vector<int> b);
 
-bool assert_matrices(vector<vector<int>> matrix_1, vector<vector<int>> matrix_2);
+bool assert_matrices(vector<vector<long int>> matrix_1, vector<vector<long int>> matrix_2);
 
 bool assert_matrices(vector<vector<double>> matrix_1, vector<vector<double>> matrix_2);
 
@@ -59,13 +61,13 @@ vector<int> trim_vector(vector<int> v, int number_of_elements);
 
 vector<vector<int>> find_knots(vector<int> L, vector<int> T);
 
-int newton_symbol(int n, int k);
+long int newton_symbol(int n, int k);
 
-int single_type_rectangle(int cols_num, int rows_num, int rooks_num);
+long int single_type_rectangle(int cols_num, int rows_num, int rooks_num);
 
 int min_number_of_rooks(int i, int j, int n);
 
-vector<vector<int>> recurrence_H(vector<int> s_A, vector<int> s_B);
+vector<vector<long int>> recurrence_H(vector<int> s_A, vector<int> s_B);
 
 void test_H(int A, int n);
 
