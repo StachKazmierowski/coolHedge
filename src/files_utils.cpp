@@ -11,10 +11,10 @@ void save_matrix_to_file(vector<vector<double>> matrix, vector<vector<int>> row_
 void save_time_to_file(long int miliseconds, int A, int B, int n){
     ofstream my_file;
     stringstream ss;
-    ss << TIMES_PATH << "time(" << A << "," << B << "," << n << ".txt";
+    ss << TIMES_PATH << "time(" << A << "," << B << "," << n << ").txt";
     my_file.open (ss.str());
     ss.clear();
-    my_file << miliseconds;
+    my_file << miliseconds << "\n";
     my_file.close();
 }
 
