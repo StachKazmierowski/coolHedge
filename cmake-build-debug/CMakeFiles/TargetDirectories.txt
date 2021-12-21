@@ -1,3 +1,0 @@
-/home/stach/grant/Hedge_cpp/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/stach/grant/Hedge_cpp/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/stach/grant/Hedge_cpp/cmake-build-debug/CMakeFiles/Hedge_cpp.dir
