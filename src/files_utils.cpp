@@ -55,9 +55,10 @@ void write_rows(ofstream& my_file, vector<vector<double>> matrix, vector<vector<
 
 void find_and_save_chopstick_matrix(int A, int B, int n){
     chrono::steady_clock::time_point begin = chrono::steady_clock::now();
-    vector<vector<int>> A_strategies = divides_strategies(A, n);
-    vector<vector<int>> B_strategies = divides_strategies(B, n);
-    vector<vector<double>> matrix = payoff_matrix_chopstick_parallel(A, B, n);
+    vector<vector<double>> matrix;
+    vector<vector<int>> A_strategies;
+    vector<vector<int>> B_strategies;
+    tie(matrix, A_strategies, B_strategies) = payoff_matrix_chopstick_parallel(A, B, n);
     chrono::steady_clock::time_point end = chrono::steady_clock::now();
     long int miliseconds = chrono::duration_cast<chrono::milliseconds>(end - begin).count();
     save_time_to_file(miliseconds, A, B, n);
