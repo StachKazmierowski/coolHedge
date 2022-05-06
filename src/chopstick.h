@@ -17,5 +17,6 @@ tuple<vector<vector<double>>, vector<vector<int>>, vector<vector<int>>> payoff_m
 
 tuple<vector<vector<double>>, vector<vector<int>>, vector<vector<int>>> payoff_matrix_chopstick_symmetric_parallel(int A, int B, int n);
 
+tuple<vector<vector<double>>, vector<vector<int>>, vector<vector<int>>> payoff_matrix_unsymmetrized_chopstick_parallel(int A, int B, int n);
 
 #endif //HEDGE_CPP_CHOPSTICK_H

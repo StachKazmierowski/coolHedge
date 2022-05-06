@@ -8,10 +8,10 @@ void save_matrix_to_file(vector<vector<double>> matrix, vector<vector<int>> row_
     my_file.close();
 }
 
-void save_time_to_file(long int miliseconds, int A, int B, int n){
+void save_time_to_file(long int miliseconds, int A, int B, int n, string path){
     ofstream my_file;
     stringstream ss;
-    ss << TIMES_PATH << "time(" << A << "," << B << "," << n << ").txt";
+    ss << path << "time(" << A << "," << B << "," << n << ").txt";
     my_file.open (ss.str());
     ss.clear();
     my_file << miliseconds << "\n";
@@ -61,8 +61,22 @@ void find_and_save_chopstick_matrix(int A, int B, int n){
     tie(matrix, A_strategies, B_strategies) = payoff_matrix_chopstick_parallel(A, B, n);
     chrono::steady_clock::time_point end = chrono::steady_clock::now();
     long int miliseconds = chrono::duration_cast<chrono::milliseconds>(end - begin).count();
-    save_time_to_file(miliseconds, A, B, n);
+    save_time_to_file(miliseconds, A, B, n, TIMES_PATH);
     stringstream ss;
     ss << MATRICES_PATH << "payoff_matrix(" << A << "," << B << "," << n << ").csv";
+    save_matrix_to_file(matrix, A_strategies, B_strategies, ss.str());
+}
+
+void find_and_save_unsymmetrized_chopstick_matrix(int A, int B, int n){
+    chrono::steady_clock::time_point begin = chrono::steady_clock::now();
+    vector<vector<double>> matrix;
+    vector<vector<int>> A_strategies;
+    vector<vector<int>> B_strategies;
+    tie(matrix, A_strategies, B_strategies) = payoff_matrix_unsymmetrized_chopstick_parallel(A, B, n);
+    chrono::steady_clock::time_point end = chrono::steady_clock::now();
+    long int miliseconds = chrono::duration_cast<chrono::milliseconds>(end - begin).count();
+    save_time_to_file(miliseconds, A, B, n, UNSYMMETRIZED_TIMES_PATH);
+    stringstream ss;
+    ss << UNSYMMETRIZED_MATRICES_PATH << "payoff_matrix(" << A << "," << B << "," << n << ").csv";
     save_matrix_to_file(matrix, A_strategies, B_strategies, ss.str());
 }
