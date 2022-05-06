@@ -4,6 +4,7 @@ using namespace std;
 #include "src/utils.h"
 #include "src/chopstick.h"
 #include "src/files_utils.h"
+#include "src/unsymmetrized_matrices.h"
 
 int main(int argc, char *argv[]) {
     // TODO różne rodzaje macieży obliczać na raz
@@ -11,6 +12,8 @@ int main(int argc, char *argv[]) {
     int A = atoi(argv[1]);
     int B = atoi(argv[2]);
     int n = atoi(argv[3]);
-    find_and_save_chopstick_matrix(A, B, n);
+    find_and_save_unsymmetrized_chopstick_matrix(A,B,n);
+    
     return 0;
+
 }
